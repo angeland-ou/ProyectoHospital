@@ -45,8 +45,65 @@ public class Paciente {
         return sintoma;
     }
 
+    public static String asignacionCatSintoma(int sintoma){
+        String cat = "";
+        switch (sintoma) {
+            case 0:
+                cat = Hospital.CAT_0;
+                System.out.println("\n¿Exploración?:\n"
+                        + Hospital.CAT_00 + " (0)\n"
+                        + Hospital.CAT_01 + " (1)\n"
+                        + Hospital.CAT_02 + " (2)\n"
+                        + Hospital.CAT_03 + " (3)\n: ");
+                break;
+            case 1:
+                cat =  Hospital.CAT_1;
+                //catSintoma = getCatSintoma();
+                System.out.println("\n¿Exporación?:\n"
+                        + Hospital.CAT_10 + " (0)\n"
+                        + Hospital.CAT_11 + " (1)\n"
+                        + Hospital.CAT_12 + " (2)\n"
+                        + Hospital.CAT_13 + " (3)\n: ");
+                break;
+            case 2:
+                cat =  Hospital.CAT_2;
+                //setCatSintoma(Hospital.CAT_2);
+                //catSintoma = getCatSintoma();
+                System.out.println("\n¿Exploración?:\n"
+                        + Hospital.CAT_20 + " (0)\n"
+                        + Hospital.CAT_21 + " (1)\n"
+                        + Hospital.CAT_22 + " (2)\n"
+                        + Hospital.CAT_23 + " (3)\n: ");
+                break;
+            case 3:
+                cat =  Hospital.CAT_3;
+                System.out.println("\n¿Exploración?:\n"
+                        + Hospital.CAT_30 + " (0)\n"
+                        + Hospital.CAT_31 + " (1)\n"
+                        + Hospital.CAT_32 + " (2)\n"
+                        + Hospital.CAT_33 + " (3)\n: ");
+                break;
+            default:
+                System.out.println("El tipo de exploración no se encuentra.");
+        }
+        return cat;
+    }
+
+    public static int solicitudExploracion(){
+        Scanner scn = new Scanner(System.in);
+        int exploracion = scn.nextInt(); // Recojo codigo exploracion
+        while ((exploracion < Hospital.MIN_EXPLORACION) || (exploracion > Hospital.MAX_EXPLORACION)) { // compruebo que el dato cumple condiciones
+            System.out.print("No has introducido un dato correcto, por favor vuelve a insertarlo: ");
+            Hospital.validacionInt();
+            exploracion = scn.nextInt(); // Recojo codigo exploracion
+        }
+        return exploracion;
+    }
+
     public static int solicitudTemperaturaActual(){
 
+
+        return 0;
     }
 
     public String getCatSintoma() {

@@ -29,54 +29,11 @@ public class Hospital {
 
         // SOLICITUD SINTOMA
         sintoma = Paciente.solicitudSintoma();
+        catSintoma = (Paciente.asignacionCatSintoma(sintoma));
 
         // SOLICITUD EXPLORACION SEGÚN SINTOMA RECOGIDO
-        switch (sintoma) {
-            case 0:
-                Paciente.setCatSintoma(CAT_0);
-                catSintoma = Paciente.getCatSintoma();
-                        System.out.println("\n¿Exploración?:\n"
-                        + CAT_00 + " (0)\n"
-                        + CAT_01 + " (1)\n"
-                        + CAT_02 + " (2)\n"
-                        + CAT_03 + " (3)\n: ");
-                break;
-            case 1:
-                Paciente.setCatSintoma(CAT_1);
-                catSintoma = Paciente.getCatSintoma();
-                System.out.println("\n¿Exporación?:\n"
-                        + CAT_10 + " (0)\n"
-                        + CAT_11 + " (1)\n"
-                        + CAT_12 + " (2)\n"
-                        + CAT_13 + " (3)\n: ");
-                break;
-            case 2:
-                Paciente.setCatSintoma(CAT_0);
-                catSintoma = Paciente.getCatSintoma();
-                System.out.println("\n¿Exploración?:\n"
-                        + CAT_20 + " (0)\n"
-                        + CAT_21 + " (1)\n"
-                        + CAT_22 + " (2)\n"
-                        + CAT_23 + " (3)\n: ");
-                break;
-            case 3:
-                catSintoma = CAT_3;
-                System.out.println("\n¿Exploración?:\n"
-                        + CAT_30 + " (0)\n"
-                        + CAT_31 + " (1)\n"
-                        + CAT_32 + " (2)\n"
-                        + CAT_33 + " (3)\n: ");
-                break;
-            default:
-                System.out.println("El tipo de exploración no se encuentra.");
-        }
-        validacionInt();
-        exploracion = scn.nextInt(); // Recojo codigo exploracion
-        while ((exploracion < MIN_EXPLORACION) || (exploracion > MAX_EXPLORACION)) { // compruebo que el dato cumple condiciones
-            System.out.print("No has introducido un dato correcto, por favor vuelve a insertarlo: ");
-            validacionInt();
-            exploracion = scn.nextInt(); // Recojo codigo exploracion
-        }
+        exploracion = Paciente.solicitudExploracion();
+
 
         // ASIGNACIÓN DE VALOR DE CATEGORÍA DE EXPLORACIÓN
         switch (sintoma) {
