@@ -36,40 +36,7 @@ public class Hospital {
 
 
         // ASIGNACIÓN DE VALOR DE CATEGORÍA DE EXPLORACIÓN
-        switch (sintoma) {
-            case 0:
-                switch (exploracion) {
-                    case 0 -> catExploracion = CAT_00;
-                    case 1 -> catExploracion = CAT_01;
-                    case 2 -> catExploracion = CAT_02;
-                    case 3 -> catExploracion = CAT_03;
-                    default -> System.out.println("El tipo de exploración no se encuentra.");
-                }
-            case 1:
-                switch (exploracion) {
-                    case 0 -> catExploracion = CAT_10;
-                    case 1 -> catExploracion = CAT_11;
-                    case 2 -> catExploracion = CAT_12;
-                    case 3 -> catExploracion = CAT_13;
-                    default -> System.out.println("El tipo de exploración no se encuentra.");
-                }
-            case 2:
-                switch (exploracion) {
-                    case 0 -> catExploracion = CAT_20;
-                    case 1 -> catExploracion = CAT_21;
-                    case 2 -> catExploracion = CAT_22;
-                    case 3 -> catExploracion = CAT_23;
-                    default -> System.out.println("El tipo de exploración no se encuentra.");
-                }
-            case 3:
-                switch (exploracion) {
-                    case 0 -> catExploracion = CAT_30;
-                    case 1 -> catExploracion = CAT_31;
-                    case 2 -> catExploracion = CAT_32;
-                    case 3 -> catExploracion = CAT_33;
-                    default -> System.out.println("El tipo de exploración no se encuentra.");
-                }
-        }
+        catExploracion = Paciente.asignacionCatExploracion(sintoma,exploracion);
 
         // SOLICITUD DE NIVEL DE PRIORIDAD
         System.out.print("\n¿Nivel de prioridad?: ");

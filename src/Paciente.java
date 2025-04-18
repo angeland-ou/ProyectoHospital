@@ -46,10 +46,10 @@ public class Paciente {
     }
 
     public static String asignacionCatSintoma(int sintoma){
-        String cat = "";
+        String catSintoma = "";
         switch (sintoma) {
             case 0:
-                cat = Hospital.CAT_0;
+                catSintoma = Hospital.CAT_0;
                 System.out.println("\n¿Exploración?:\n"
                         + Hospital.CAT_00 + " (0)\n"
                         + Hospital.CAT_01 + " (1)\n"
@@ -57,7 +57,7 @@ public class Paciente {
                         + Hospital.CAT_03 + " (3)\n: ");
                 break;
             case 1:
-                cat =  Hospital.CAT_1;
+                catSintoma =  Hospital.CAT_1;
                 //catSintoma = getCatSintoma();
                 System.out.println("\n¿Exporación?:\n"
                         + Hospital.CAT_10 + " (0)\n"
@@ -66,7 +66,7 @@ public class Paciente {
                         + Hospital.CAT_13 + " (3)\n: ");
                 break;
             case 2:
-                cat =  Hospital.CAT_2;
+                catSintoma =  Hospital.CAT_2;
                 //setCatSintoma(Hospital.CAT_2);
                 //catSintoma = getCatSintoma();
                 System.out.println("\n¿Exploración?:\n"
@@ -76,7 +76,7 @@ public class Paciente {
                         + Hospital.CAT_23 + " (3)\n: ");
                 break;
             case 3:
-                cat =  Hospital.CAT_3;
+                catSintoma =  Hospital.CAT_3;
                 System.out.println("\n¿Exploración?:\n"
                         + Hospital.CAT_30 + " (0)\n"
                         + Hospital.CAT_31 + " (1)\n"
@@ -86,7 +86,7 @@ public class Paciente {
             default:
                 System.out.println("El tipo de exploración no se encuentra.");
         }
-        return cat;
+        return catSintoma;
     }
 
     public static int solicitudExploracion(){
@@ -98,6 +98,81 @@ public class Paciente {
             exploracion = scn.nextInt(); // Recojo codigo exploracion
         }
         return exploracion;
+    }
+
+    public static String asignacionCatExploracion(int sintoma, int exploracion){
+        String catExploracion= "";
+        switch (sintoma) {
+            case 0:
+                switch (exploracion) {
+                    case 0:
+                        catExploracion = Hospital.CAT_00;
+                        break;
+                    case 1:
+                        catExploracion = Hospital.CAT_01;
+                        break;
+                    case 2:
+                        catExploracion = Hospital.CAT_02;
+                        break;
+                    case 3:
+                        catExploracion = Hospital.CAT_03;
+                        break;
+                    default:
+                        System.out.println("El tipo de exploración no se encuentra.");
+                }
+            case 1:
+                switch (exploracion) {
+                    case 0:
+                        catExploracion = Hospital.CAT_10;
+                        break;
+                    case 1:
+                        catExploracion = Hospital.CAT_11;
+                        break;
+                    case 2:
+                        catExploracion = Hospital.CAT_12;
+                        break;
+                    case 3:
+                        catExploracion = Hospital.CAT_13;
+                        break;
+                    default:
+                        System.out.println("El tipo de exploración no se encuentra.");
+                }
+            case 2:
+                switch (exploracion) {
+                    case 0:
+                        catExploracion = Hospital.CAT_20;
+                        break;
+                    case 1:
+                        catExploracion = Hospital.CAT_21;
+                        break;
+                    case 2:
+                        catExploracion = Hospital.CAT_22;
+                        break;
+                    case 3:
+                        catExploracion = Hospital.CAT_23;
+                        break;
+                    default:
+                        System.out.println("El tipo de exploración no se encuentra.");
+                }
+            case 3:
+                switch (exploracion) {
+                    case 0:
+                        catExploracion = Hospital.CAT_30;
+                        break;
+                    case 1:
+                        catExploracion = Hospital.CAT_31;
+                        break;
+                    case 2:
+                        catExploracion = Hospital.CAT_32;
+                        break;
+                    case 3:
+                        catExploracion = Hospital.CAT_33;
+                        break;
+                    default:
+                        System.out.println("El tipo de exploración no se encuentra.");
+                }
+        }
+        return catExploracion;
     }
 
     public static int solicitudTemperaturaActual(){
