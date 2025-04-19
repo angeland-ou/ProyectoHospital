@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Hospital {
@@ -19,64 +20,54 @@ public class Hospital {
 
     public static void main(String[] args) {
 
-        Scanner scn = new Scanner(System.in);
-        String catSintoma = "", catExploracion = "";
-        int nuss, temperaturaActual, nivelPrioridad, sintoma, exploracion;
-        ArrayList<Paciente> listaEspera = new ArrayList<Paciente>();
+        try {
+            // Creamos registro de pacientes
+            RegistroPacientes registroPacientes1 = new RegistroPacientes();
+            boolean salir = false;
+            do {
+                //Mostramos menu de opciones
+                mostrarMenu();
+                int opcion = Paciente.solicitarYValidarInt();
+                switch (opcion){
+                    case 1:
+                        Paciente nuevoPaciente = Paciente.nuevoPaciente();
+//                        // Imprimimos por pantalla paciente a insertar
+//                        Paciente.imprimirPaciente(nuevoPaciente);
+                        // Añadimos paciente al registro que hemos creado
+                        registroPacientes1.anadirPaciente(nuevoPaciente);
+                        break;
+                    case 2:
+                        // Listamos todos los pacientes que hay en el registro
+                        registroPacientes1.listarPacientes();
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        // Salimos del programa
+                        salir = true;
+                        break;
+                    default:
+                        System.out.println("Debes elegir una opción de las disponibles.");
+                }
+            } while (!salir);
 
-        // SOLICITUD NUMERO NUSS
-        nuss = Paciente.solicitudNuss();
-
-        // SOLICITUD SINTOMA
-        sintoma = Paciente.solicitudSintoma();
-        catSintoma = (Paciente.asignacionCatSintoma(sintoma));
-
-        // SOLICITUD EXPLORACION SEGÚN SINTOMA RECOGIDO
-        exploracion = Paciente.solicitudExploracion();
-
-
-        // ASIGNACIÓN DE VALOR DE CATEGORÍA DE EXPLORACIÓN
-        catExploracion = Paciente.asignacionCatExploracion(sintoma,exploracion);
-
-        // SOLICITUD DE NIVEL DE PRIORIDAD
-        System.out.print("\n¿Nivel de prioridad?: ");
-        validacionInt();
-        nivelPrioridad = scn.nextInt(); // Recojo codigo nivelPrioridad
-        while ((nivelPrioridad < MIN_PRIORIDAD) || (nivelPrioridad > MAX_PRIORIDAD)) { // compruebo que el dato cumple condiciones
-            System.out.println("No has introducido un dato correcto, por favor vuelve a insertarlo: ");
-            validacionInt();
-            nivelPrioridad = scn.nextInt(); // Recojo codigo nivelPrioridad
+        } catch (NumberFormatException nfe){
+            throw new NumberFormatException(nfe.getMessage());
+        } catch (NullPointerException npe){
+            throw new NullPointerException(npe.getMessage());
+        } catch (InputMismatchException ime) {
+            throw new InputMismatchException(ime.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
         }
 
-        // SOLICITUD DE TEMPERATURA ACTUAL
-        System.out.print("\n¿Temperatura actual?: ");
-        validacionInt();
-        temperaturaActual = scn.nextInt(); // 27 - 45 Recojo codigo temperaturaActual
-        while ((temperaturaActual < MIN_TEMPERATURA) || (temperaturaActual > MAX_TEMPERATURA)) { // compruebo que el dato cumple condiciones
-            System.out.print("No has introducido un dato correcto, por favor vuelve a insertarlo: ");
-            validacionInt();
-            temperaturaActual = scn.nextInt(); // 27 - 45 Recojo codigo temperaturaActual
-        }
-
-        // Añadimos paciente al arraylist de listaEspera
-        Paciente nuevoPaciente = new Paciente(nuss, catSintoma, catExploracion, temperaturaActual, nivelPrioridad, sintoma, exploracion);
-        listaEspera.add(nuevoPaciente);
-
-        // Imprimimos arraylist con los pacientes
-        for (int i=0;i<listaEspera.size();i++) {
-            System.out.println(listaEspera.get(i));
-        }
-
-        // IMPRESIÓN POR PANTALLA DE LOS DATOS
-//        System.out.printf("\nNUSS: %d\nSíntoma: %s\t/\tExploración: %s\t/\tTemperatura actual: %d\nNivel de prioridad: %d\n", nuss, catSintoma, catExploracion, temperaturaActual, nivelPrioridad);
-//        scn.close();
     }
-    public static void validacionInt(){
-        Scanner scn = new Scanner(System.in);
-        while (!scn.hasNextInt()){  // Me aseguro de que el usuario introduzca el tipo de dato correcto
-            System.out.println("No es un dato válido");
-            scn.next(); // Descartar entrada incorrecta
-        }
+    // Metodo para mostrar el menu contextual para elegir opciones de registro
+    public static void mostrarMenu(){
+        System.out.println("------MENU OPCIONES------");
+        System.out.println("1. Introducir paciente");
+        System.out.println("2. Mostrar registro de pacientes");
+        System.out.println("3. Borrar paciente del registro (en construcción)");
+        System.out.println("4. Salir del programa");
     }
-
 }

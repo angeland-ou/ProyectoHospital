@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Paciente {
@@ -14,16 +15,24 @@ public class Paciente {
         this.exploracion = exploracion;
     }
 
+    public static int solicitarYValidarInt() throws InputMismatchException {
+        Scanner scn = new Scanner(System.in);
+        String input;
+        while (!scn.hasNextInt()) {  // Me aseguro de que el usuario introduzca el tipo de dato correcto
+            System.out.println("No es un dato válido. Introduce un entero: ");
+            scn.nextLine(); // Limpiar el buffer para poder leer otro entero
+        }
+        input = scn.nextLine();
+        return Integer.parseInt(input);
+    }
+
     public static int solicitudNuss(){
         int nuss;
-        Scanner scn = new Scanner(System.in);
-        System.out.println("¿NUSS?: ");
-        Hospital.validacionInt();
-        nuss = scn.nextInt();
+        System.out.println("¿NUSS? ("+Hospital.MIN_NUSS+ "-"+Hospital.MAX_NUSS+") :");
+        nuss = solicitarYValidarInt();
         while ((nuss < Hospital.MIN_NUSS) || (nuss > Hospital.MAX_NUSS)) {  // compruebo que el dato cumple condiciones
             System.out.println("No has introducido un dato correcto, por favor vuelve a insertarlo: ");
-            Hospital.validacionInt();
-            nuss = scn.nextInt();
+            nuss = solicitarYValidarInt();
         }
         return nuss;
     }
@@ -34,13 +43,10 @@ public class Paciente {
                 + Hospital.CAT_1 + " (1)\n"
                 + Hospital.CAT_2 + " (2)\n"
                 + Hospital.CAT_3 + " (3)\n: ");
-        Hospital.validacionInt();
-        Scanner scn = new Scanner(System.in);
-        int sintoma = scn.nextInt(); // Recojo codigo sintoma
+        int sintoma = solicitarYValidarInt(); // Recojo codigo sintoma
         while ((sintoma < Hospital.MIN_SINTOMA) || (sintoma > Hospital.MAX_SINTOMA)) { // compruebo que el dato cumple condiciones
             System.out.print("No has introducido un dato correcto, por favor vuelve a insertarlo: ");
-            Hospital.validacionInt();
-            sintoma = scn.nextInt(); // Recojo codigo sintoma
+            sintoma = solicitarYValidarInt(); // Recojo codigo sintoma
         }
         return sintoma;
     }
@@ -58,7 +64,6 @@ public class Paciente {
                 break;
             case 1:
                 catSintoma =  Hospital.CAT_1;
-                //catSintoma = getCatSintoma();
                 System.out.println("\n¿Exporación?:\n"
                         + Hospital.CAT_10 + " (0)\n"
                         + Hospital.CAT_11 + " (1)\n"
@@ -67,8 +72,6 @@ public class Paciente {
                 break;
             case 2:
                 catSintoma =  Hospital.CAT_2;
-                //setCatSintoma(Hospital.CAT_2);
-                //catSintoma = getCatSintoma();
                 System.out.println("\n¿Exploración?:\n"
                         + Hospital.CAT_20 + " (0)\n"
                         + Hospital.CAT_21 + " (1)\n"
@@ -90,12 +93,10 @@ public class Paciente {
     }
 
     public static int solicitudExploracion(){
-        Scanner scn = new Scanner(System.in);
-        int exploracion = scn.nextInt(); // Recojo codigo exploracion
+        int exploracion = solicitarYValidarInt(); // Recojo codigo exploracion
         while ((exploracion < Hospital.MIN_EXPLORACION) || (exploracion > Hospital.MAX_EXPLORACION)) { // compruebo que el dato cumple condiciones
             System.out.print("No has introducido un dato correcto, por favor vuelve a insertarlo: ");
-            Hospital.validacionInt();
-            exploracion = scn.nextInt(); // Recojo codigo exploracion
+            exploracion = solicitarYValidarInt(); // Recojo codigo exploracion
         }
         return exploracion;
     }
@@ -175,10 +176,70 @@ public class Paciente {
         return catExploracion;
     }
 
+    public static int solicitudNivelPrioridad(){
+        System.out.print("\n¿Nivel de prioridad? ("+Hospital.MIN_PRIORIDAD+ "-"+Hospital.MAX_PRIORIDAD+") :");
+        int nivelPrioridad = solicitarYValidarInt(); // Recojo codigo nivelPrioridad
+        while ((nivelPrioridad < Hospital.MIN_PRIORIDAD) || (nivelPrioridad > Hospital.MAX_PRIORIDAD)) { // compruebo que el dato cumple condiciones
+            System.out.println("No has introducido un dato correcto, por favor vuelve a insertarlo: ");
+            nivelPrioridad = solicitarYValidarInt(); // Recojo codigo nivelPrioridad
+        }
+        return nivelPrioridad;
+    }
+
     public static int solicitudTemperaturaActual(){
+        int temperaturaActual;
+        System.out.print("\n¿Temperatura actual? ("+Hospital.MIN_TEMPERATURA+ "-"+Hospital.MAX_TEMPERATURA+") :");
+        temperaturaActual = solicitarYValidarInt(); // 27 - 45 Recojo codigo temperaturaActual
+        while ((temperaturaActual < Hospital.MIN_TEMPERATURA) || (temperaturaActual > Hospital.MAX_TEMPERATURA)) { // compruebo que el dato cumple condiciones
+            System.out.print("No has introducido un dato correcto, por favor vuelve a insertarlo: ");
+            temperaturaActual = solicitarYValidarInt(); // 27 - 45 Recojo codigo temperaturaActual
+        }
 
+        return temperaturaActual;
+    }
 
-        return 0;
+    public static Paciente nuevoPaciente(){
+
+        String catSintoma = "", catExploracion = "";
+        int nuss, sintoma, exploracion, nivelPrioridad, temperaturaActual;
+
+        System.out.println("\nPANEL DE REGISTRO DE PACIENTE");
+        System.out.println("------Cubra los siguientes datos para registrar al paciente------");
+
+        // SOLICITUD NUMERO NUSS
+        nuss = Paciente.solicitudNuss();
+
+        // SOLICITUD SINTOMA
+        sintoma = Paciente.solicitudSintoma();
+
+        // ASIGNACION DE VALOR DE CATEGORIA SINTOMA
+        catSintoma = (Paciente.asignacionCatSintoma(sintoma));
+
+        // SOLICITUD EXPLORACION SEGÚN SINTOMA RECOGIDO
+        exploracion = Paciente.solicitudExploracion();
+
+        // ASIGNACIÓN DE VALOR DE CATEGORÍA DE EXPLORACIÓN
+        catExploracion = Paciente.asignacionCatExploracion(sintoma,exploracion);
+
+        // SOLICITUD DE NIVEL DE PRIORIDAD
+        nivelPrioridad = Paciente.solicitudNivelPrioridad();
+
+        // SOLICITUD DE TEMPERATURA ACTUAL
+        temperaturaActual = Paciente.solicitudTemperaturaActual();
+
+        Paciente nuevoPaciente = new Paciente(nuss, catSintoma, catExploracion, temperaturaActual, nivelPrioridad, sintoma, exploracion);
+
+        return nuevoPaciente;
+    }
+
+    public static void imprimirPaciente(Paciente paciente){
+        System.out.println("\nPaciente a insertar:");
+        System.out.println("Nuss: "+paciente.getNuss());
+        System.out.println("Sintoma: "+paciente.getSintoma()+" -> " +paciente.getCatSintoma());
+        System.out.println("Exploracion: "+paciente.getExploracion()+" -> " +paciente.getCatExploracion());
+        System.out.println("Temperatura: "+paciente.getTemperaturaActual());
+        System.out.println("Nivel de prioridad: "+paciente.getNivelPrioridad());
+        System.out.println(" ");
     }
 
     public String getCatSintoma() {
